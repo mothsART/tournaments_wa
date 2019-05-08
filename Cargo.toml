@@ -1,0 +1,13 @@
+[package]
+name = "tournaments_wa"
+version = "0.1.0"
+authors = ["Jérémie Ferry <jerem.ferry@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+yew = "0.6.0"
+fluent-bundle = "0.6.0"
+
+serde = "1"
+serde_derive = "1"
+pulldown-cmark = "0.1.2"
