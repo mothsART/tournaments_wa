@@ -10,4 +10,3 @@ fluent-bundle = "0.6.0"
 
 serde = "1"
 serde_derive = "1"
-pulldown-cmark = "0.1.2"
