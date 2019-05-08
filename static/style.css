@@ -11,10 +11,6 @@
     margin: 1rem;
 }
 
-.players {
-    
-}
-
 .player {
     background: lightgrey;
     border-radius: 100%;
@@ -50,4 +46,13 @@
 
 .fight .first {
     border-bottom: solid 1px black;
+}
+
+.winner {
+    margin-left: 1rem;
+    margin-bottom: .5rem;
+}
+
+.winner .player:after {
+    border: none;
 }

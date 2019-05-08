@@ -10,9 +10,9 @@ use fluent_bundle::{FluentBundle, FluentResource};
 struct Model {
     console: ConsoleService,
     scene: Scene,
-    rounds: Vec<Round>
+    rounds: Vec<Round>,
+    winner: FightingPlayer
 }
-
 
 struct Round {
     inc: usize,
@@ -71,42 +71,54 @@ impl Component for Model {
 
     fn create(_: Self::Properties, _: ComponentLink<Self>) -> Self {
         let player_one = Some(Rc::new(Player {
-            first_name: String::from("jerem"),
-            last_name: String::from("ferry")
+            first_name: String::from("Xenial"),
+            last_name: String::from("Xerus")
         }));
-        let player_two = Player {
-            first_name: String::from("tom"),
-            last_name: String::from("carotte")
-        };
+        let player_two = Some(Rc::new(Player {
+            first_name: String::from("Bionic"),
+            last_name: String::from("Beaver")
+        }));
         let player_three = Some(Rc::new(Player {
-            first_name: String::from("super"),
-            last_name: String::from("star")
+            first_name: String::from("Cosmic"),
+            last_name: String::from("Cuttlefish")
         }));
-        let player_four = Player {
-            first_name: String::from("mario"),
-            last_name: String::from("bros")
-        };
-        let player_five = Player {
-            first_name: String::from("princess"),
-            last_name: String::from("peach")
-        };
-        let player_six = Player {
-            first_name: String::from("luigi"),
-            last_name: String::from("bros")
-        };
+        let player_four = Some(Rc::new(Player {
+            first_name: String::from("Disco"),
+            last_name: String::from("Dingo")
+        }));
+        let player_five = Some(Rc::new(Player {
+            first_name: String::from("Artful"),
+            last_name: String::from("Aardvark")
+        }));
+        let player_six = Some(Rc::new(Player {
+            first_name: String::from("Zesty"),
+            last_name: String::from("Zapus")
+        }));
+        let player_seven = Some(Rc::new(Player {
+            first_name: String::from("Artful"),
+            last_name: String::from("Aardvark")
+        }));
+        let player_height = Some(Rc::new(Player {
+            first_name: String::from("Warty"),
+            last_name: String::from("Warthog")
+        }));
         let mut rounds = Vec::new();
         let mut round_one = Round::new();
         round_one.push(Fight {
             first_player: player_one.clone(),
-            second_player:  Some(Rc::new(player_two))
+            second_player:  player_two
         });
         round_one.push(Fight {
             first_player: player_three.clone(),
-            second_player:  Some(Rc::new(player_four))
+            second_player: player_four
         });
         round_one.push(Fight {
-            first_player: Some(Rc::new(player_five)),
-            second_player:  Some(Rc::new(player_six))
+            first_player: player_five,
+            second_player:  player_six.clone()
+        });
+        round_one.push(Fight {
+            first_player: player_seven,
+            second_player:  player_height.clone()
         });
         rounds.push(round_one);
         
@@ -115,11 +127,23 @@ impl Component for Model {
             first_player: player_one.clone(),
             second_player:  player_three.clone()
         });
+        round_two.push(Fight {
+            first_player: player_six.clone(),
+            second_player:  player_height.clone()
+        });
         rounds.push(round_two);
+        
+        let mut round_three = Round::new();
+        round_three.push(Fight {
+            first_player: player_one.clone(),
+            second_player:  player_six.clone()
+        });
+        rounds.push(round_three);
         Model {
             console: ConsoleService::new(),
             scene: Scene::Create,
-            rounds: rounds
+            rounds: rounds,
+            winner: player_six.clone()
         }
     }
 
@@ -188,6 +212,16 @@ impl Renderable<Model> for Model {
                                 {
                                     for self.rounds.iter().map(Renderable::view)
                                 }
+                            </div>
+                            <div class="winner",>
+                                <div class="player",>
+                                    { format!(
+                                        "{} {}",
+                                        self.winner.clone().unwrap().first_name,
+                                        self.winner.clone().unwrap().last_name
+                                      )
+                                }
+                                </div>
                             </div>
                         </div>
                     </div>
